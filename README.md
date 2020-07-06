@@ -67,9 +67,9 @@ and also update the mouse's `isDown` state."
 
 The code uses a special combinator `%=%` that's not provided with the
 `lens` package but was easy to write. Before I wrote it, I tried
-several ways of doing multiple updates to a variable. I wanted
-something that was as concise as Dart's `..` ("cascade") operator
-which allows one to write
+several ways of performing multiple updates to the target of a lens. I
+wanted something that was as concise as Dart's `..` ("cascade")
+operator which allows one to write
 
 ```dart
 mouse
@@ -126,7 +126,7 @@ The following definition worked:
 l %=% m = do
   a  <- use l
   a' <- execStateT m a
-  l .= a
+  l .= a'
 ```
 
 Finally, I realized that this could be rewritten to even work with
@@ -153,7 +153,7 @@ printAndIncrementFstAll = each %=% printAndIncrementFst
 
 And it composes very nicely:
 
-```
+```haskell
 mouse %=% do
   position %=% do
     -- There's probably a way to write
@@ -205,10 +205,9 @@ Observations:
   neater, in my opinion. Additionally, `World` is an immutable data
   type, but C#'s object initializer syntax requires mutation.
 * `lens`'s `makeFields` and `makeLenses` Template Haskell meta
-  programs require some naming conventions which cause some noise:
-  extra underscores for `World` fields, and the entire type name is
-  repeated for `MouseState` because I use `makeFields` instead of
-  `makeLenses`.
+  programs require naming conventions that cause some noise: extra
+  underscores for `World` fields, and the entire type name is repeated
+  for `MouseState` because I use `makeFields` instead of `makeLenses`.
 * I'm writing this in emacs with haskell-ide-engine and lsp-haskell
   (which were a pain to set up), so whenever I added a new field to a
   type, it warned me that I needed to initialize it here. In C#,
