@@ -1,0 +1,18 @@
+import RectGrid ( rowMajorList, constant, imap )
+import Graphics.Gloss
+    ( black,
+      white,
+      color,
+      pictures,
+      rectangleSolid,
+      rectangleWire,
+      scale,
+      translate,
+      Display(InWindow) )
+import Graphics.Gloss.Interface.IO.Game
+    ( playIO,
+      Key(MouseButton),
+      KeyState(Down),
+      MouseButton(LeftButton),
+      Event(EventKey) )
+import Data.Functor ( (<&>) )

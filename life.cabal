@@ -1,0 +1,85 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: a96835919e9b0a0de9e4c6ed735f60378176081728466872ebf08a827885cf6a
+
+name:           life
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/life#readme>
+homepage:       https://github.com/githubuser/life#readme
+bug-reports:    https://github.com/githubuser/life/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2020 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/life
+
+library
+  exposed-modules:
+      InfiniteGrid
+      Lib
+      RectGrid
+  other-modules:
+      Paths_life
+  hs-source-dirs:
+      src
+  build-depends:
+      array
+    , base >=4.7 && <5
+    , containers
+    , extra
+    , gloss
+    , lens
+    , mtl
+  default-language: Haskell2010
+
+executable life-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_life
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      array
+    , base >=4.7 && <5
+    , containers
+    , extra
+    , gloss
+    , lens
+    , life
+    , mtl
+  default-language: Haskell2010
+
+test-suite life-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      RectGridSpec
+      Paths_life
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      QuickCheck
+    , array
+    , base >=4.7 && <5
+    , containers
+    , extra
+    , gloss
+    , hspec
+    , lens
+    , life
+    , mtl
+  default-language: Haskell2010

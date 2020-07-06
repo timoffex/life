@@ -1,0 +1,8 @@
+cradle:
+  stack:
+    - path: ./test
+      component: "life:test:life-test"
+    - path: ./src
+      component: "life:lib"
+    - path: ./app
+      component: "life:life-exe"

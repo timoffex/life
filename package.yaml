@@ -1,0 +1,43 @@
+library:
+  source-dirs: src
+tests:
+  life-test:
+    source-dirs: test
+    main: Spec.hs
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - life
+    - hspec
+    - QuickCheck
+copyright: 2020 Timofey Peshin
+maintainer: timoffex@gmail.com
+dependencies:
+- extra
+- lens
+- base >= 4.7 && < 5
+- array
+- gloss
+- mtl
+- containers
+name: life
+version: 0.1.0.0
+extra-source-files:
+- README.md
+- ChangeLog.md
+author: Timofey Peshin
+github: timoffex/life
+license: BSD3
+executables:
+  life-exe:
+    source-dirs: app
+    main: Main.hs
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - life
+description: Please see the README on GitHub at <https://github.com/timoffex/life#readme>

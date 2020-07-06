@@ -1,0 +1,2 @@
+import Data.Foldable ( Foldable(toList) )
+import qualified Data.Array as A ( Array, (!), (//), array )
