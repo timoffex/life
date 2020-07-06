@@ -4,16 +4,16 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a96835919e9b0a0de9e4c6ed735f60378176081728466872ebf08a827885cf6a
+-- hash: c586c2728917038e9a5ac8a8a0cbd7122c0164015e66a1a53f31f80032d8906e
 
 name:           life
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/life#readme>
-homepage:       https://github.com/githubuser/life#readme
-bug-reports:    https://github.com/githubuser/life/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2020 Author name here
+description:    Please see the README on GitHub at <https://github.com/timoffex/life#readme>
+homepage:       https://github.com/timoffex/life#readme
+bug-reports:    https://github.com/timoffex/life/issues
+author:         Timofey Peshin
+maintainer:     timoffex@gmail.com
+copyright:      2020 Timofey Peshin
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
@@ -23,12 +23,11 @@ extra-source-files:
 
 source-repository head
   type: git
-  location: https://github.com/githubuser/life
+  location: https://github.com/timoffex/life
 
 library
   exposed-modules:
       InfiniteGrid
-      Lib
       RectGrid
   other-modules:
       Paths_life

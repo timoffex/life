@@ -165,11 +165,17 @@ mouse %=% do
     liftIO $ print $ "y was " ++ show _2
     each %= negate
   isDown %=% do
-    wasDown <- use isDown
+    wasDown <- get
     liftIO $ print $ "isDown was " ++ show wasDown
-    
+
     -- sets 'isDown' to its negation
-    isDown %= not
+    modify not
+
+	-- Instead of 'get' and 'modify', this can use 'id' like 'this'
+    -- from other languages and combine with lens style.
+    --
+    -- get           becomes    use id
+    -- modify not    becomes    id %= not
 ```
 
 You can't do that in Dart!
