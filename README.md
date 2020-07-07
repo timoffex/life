@@ -298,11 +298,7 @@ And it composes very nicely:
 ```haskell
 mouse %=% do
   position %=% do
-    -- There's probably a way to write
-    --   (x, y) <- use (<something> _1 _2)
-    -- but I'm not sure what <something> should be.
-    x <- use _1
-    y <- use _2
+    [x, y] <- use (_1 <> _2)
     liftIO $ print $ "x was " ++ show _1
     liftIO $ print $ "y was " ++ show _2
     each %= negate
