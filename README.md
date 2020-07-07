@@ -52,10 +52,10 @@ they're just good enough for my purposes. My code does not use
 #### Using prisms vs `case of`
 
 When I was first learning Haskell a bit over a year ago, I became a
-big fan of `case of`: it made me wish every language had a switch
+big fan of `case of`. It made me wish every language had a switch
 expression alongside the switch statement.
 
-```
+```haskell
 data OpenGLError = None
                  | YouMisunderstoodTheDocs
                  | ItJustDoesntWork

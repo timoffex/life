@@ -154,7 +154,7 @@ aside2 p = prism' (over _2 $ review p) (\s' -> do
 --       position .= (oldPosition & both %~ negate)
 -- @
 --
---p This composes well:
+-- This composes well:
 --
 -- @
 --   printAndFlipMice :: StateT Multiverse IO ()
