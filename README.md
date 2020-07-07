@@ -299,8 +299,8 @@ And it composes very nicely:
 mouse %=% do
   position %=% do
     (x, y) <- get
-    liftIO $ print $ "x was " ++ show _1
-    liftIO $ print $ "y was " ++ show _2
+    liftIO $ print $ "x was " ++ show x
+    liftIO $ print $ "y was " ++ show y
     each %= negate
   isDown %=% do
     wasDown <- get
