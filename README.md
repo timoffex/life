@@ -286,7 +286,7 @@ printAndIncrementFst = do
 
 -- Applies printAndIncrementFst to the first element of the tuple.
 printAndIncrementFstFst :: StateT ((Int, a), b) IO ()
-printAndIncrementFstFst = fst %=% printAndIncrementFst
+printAndIncrementFstFst = _1 %=% printAndIncrementFst
 
 -- Applies printAndIncrementFst to each tuple.
 printAndIncrementFstAll :: StateT [(Int, a)] IO ()
