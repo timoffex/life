@@ -298,7 +298,7 @@ And it composes very nicely:
 ```haskell
 mouse %=% do
   position %=% do
-    [x, y] <- use (_1 <> _2)
+    (x, y) <- get
     liftIO $ print $ "x was " ++ show _1
     liftIO $ print $ "y was " ++ show _2
     each %= negate
