@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c586c2728917038e9a5ac8a8a0cbd7122c0164015e66a1a53f31f80032d8906e
+-- hash: cdb429b788ddec7f88d2cdef85aed75cb1e32b2b5edd64a0358b95f596b9dd8b
 
 name:           life
 version:        0.1.0.0
@@ -46,6 +46,7 @@ library
 executable life-exe
   main-is: Main.hs
   other-modules:
+      DeepHas
       Paths_life
   hs-source-dirs:
       app
