@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: cdb429b788ddec7f88d2cdef85aed75cb1e32b2b5edd64a0358b95f596b9dd8b
+-- hash: 1b724c223c37a6cd6a55ffbdc4f33de2e3f5fe358cf927b99e728d9e006d549d
 
 name:           life
 version:        0.1.0.0
@@ -38,6 +38,7 @@ library
     , base >=4.7 && <5
     , containers
     , extra
+    , fused-effects >=1.1.0.0
     , gloss
     , lens
     , mtl
@@ -46,7 +47,17 @@ library
 executable life-exe
   main-is: Main.hs
   other-modules:
+      Adjust
+      BaseGame
       DeepHas
+      DrawingModule
+      GlossLenses
+      LensHelpers
+      LifeModule
+      MouseModule
+      PanningModule
+      PlayConfig
+      World
       Paths_life
   hs-source-dirs:
       app
@@ -56,6 +67,7 @@ executable life-exe
     , base >=4.7 && <5
     , containers
     , extra
+    , fused-effects >=1.1.0.0
     , gloss
     , lens
     , life
@@ -77,6 +89,7 @@ test-suite life-test
     , base >=4.7 && <5
     , containers
     , extra
+    , fused-effects >=1.1.0.0
     , gloss
     , hspec
     , lens

@@ -1,8 +1,8 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FunctionalDependencies #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE UndecidableInstances #-}
@@ -12,8 +12,9 @@
 --
 -- For example, if you have a @Lens' S T@, then you can get a @Lens'
 -- (X, (Y, (S, Z))) T@ by applying 'liftNested'.
-module DeepHas (DeepHas (liftNested)) where
+module DeepHas (DeepHas, liftNested, fromNested) where
 
+import GHC.TypeNats (Nat, KnownNat, type (+), type (<=), type (-))
 import Control.Lens (_1, _2, LensLike)
 import Data.Proxy (Proxy (Proxy))
 import Data.Type.Equality (type (==))
@@ -42,28 +43,46 @@ class DeepHas t s where
              => LensLike f t t a a
              -> LensLike f s s a a
 
-class DeepHas' (firstMatches :: Bool) t s where
+
+fromNested :: (Functor f, DeepHas t s) => LensLike f s s t t
+fromNested = liftNested id
+
+
+instance (n ~ IndexOf t s, DeepHas' n t s) => DeepHas t s where
+  liftNested = liftNested'
+
+class DeepHas' (index :: Nat) t s | s t -> index, s index -> t where
   liftNested' :: Functor f
-              => Proxy firstMatches
-              -> LensLike f t t a a
+              => LensLike f t t a a
               -> LensLike f s s a a
 
--- A little trick to avoid GHC from complaining about overlapping
--- instances.
---
--- https://kseo.github.io/posts/2017-02-05-avoid-overlapping-instances-with-closed-type-families.html
-type family FirstMatches a s where
-  FirstMatches a (a, s) = 'True
-  FirstMatches _ _      = 'False
+type family IndexOf a s where
+  IndexOf a a      = 0
+  IndexOf a (a, t) = 1
+  IndexOf a (b, t) = 2 + IndexOf a t
 
-instance DeepHas s s where
-  liftNested = id
+type family AtIndex n s where
+  AtIndex 0 s      = s
+  AtIndex 1 (s, t) = s
+  AtIndex n (x, t) = AtIndex (n - 2) t
 
-instance (DeepHas' (FirstMatches t s) t s) => DeepHas t s where
-  liftNested = liftNested' $ Proxy @(FirstMatches t s)
+instance DeepHas' 0 s s where
+  liftNested' l = l
 
-instance ((u == x) ~ 'True, u ~ x) => DeepHas' 'True u (x, t) where
-  liftNested' _ l = _1 . l
+-- The OVERLAPPING and OVERLAPPABLE annotations are needed for `stack
+-- run` but not `stack build`. I don't know why, and it's too much
+-- work to create a minimal reproducible example. `stack run` works
+-- fine if I `stack build` first, for obvious reasons.
+instance {-# OVERLAPPING #-} DeepHas' 1 s (s, t) where
+  liftNested' l = _1 . l
 
-instance ((u == x) ~ 'False, DeepHas u t) => DeepHas' 'False u (x, t) where
-  liftNested' _ l = _2 . liftNested l
+instance {-# OVERLAPPABLE #-}
+  ( m ~ IndexOf s (x, t)
+  , s ~ AtIndex m (x, t)
+  , 2 <= m
+  , KnownNat m -- Required for GHC to understand that "2 <= m" prevents
+               -- overlapping instances.
+  , DeepHas' (IndexOf s t) s t) => DeepHas' m s (x, t) where
+  
+  liftNested' l = _2 . liftNested l
+
