@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1b724c223c37a6cd6a55ffbdc4f33de2e3f5fe358cf927b99e728d9e006d549d
+-- hash: 4a8263cc033c4d9f39467524368d11fd08fca3964993cb47536d0731c9dbcadd
 
 name:           life
 version:        0.1.0.0
@@ -56,7 +56,6 @@ executable life-exe
       LifeModule
       MouseModule
       PanningModule
-      PlayConfig
       World
       Paths_life
   hs-source-dirs:
