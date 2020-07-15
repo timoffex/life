@@ -25,7 +25,8 @@ If you get it to run, the controls (as of writing) are:
 
 ### Dependency injection
 
-I implement dependency injection using the `fused-effects` library.
+I implement dependency injection using the `fused-effects` library; no
+Tempalte Haskell required!
 
 I was thinking about how to do compile-time DI in Haskell when I came
 across a [reasonablypolymorphic post on freer
@@ -53,7 +54,8 @@ position of their desired state in this tuple because that couples
 them to that state and defeats the purpose of this project).
 
 I have an idea of how to implement DI in a cleaner way, without the
-unnecessary `fused-effects`, and I'll try that out soon.
+unnecessary `fused-effects` (and still without Template Haskell), and
+I'll try that out soon.
 
 ## Observations / what I learned
 
