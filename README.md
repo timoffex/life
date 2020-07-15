@@ -19,33 +19,46 @@ issues.
 If you get it to run, the controls (as of writing) are:
 
 - Click or hold down the left mouse button to fill cells.
-- Hold shift to erase cells.
 - Drag with the right mouse button (or Ctrl + LMB on Mac) to pan.
-- Press space to start or pause the simulation.
+
+## Summary of interesting things
+
+### Dependency injection
+
+I implement dependency injection using the `fused-effects` library.
+
+I was thinking about how to do compile-time DI in Haskell when I came
+across a [reasonablypolymorphic post on freer
+monads](https://reasonablypolymorphic.com/blog/freer-monads/). After
+that, I read the paper that inspired `freer-simple`, and then I worked
+through the `fused-effects` implementation. Still in the DI mindset, I
+realized that free monads, freer monads and effects systems all solve
+a certain separation-of-concerns problem that's often solved by using
+dependency injection. In languages like Java and C#, a DI framework
+usually takes care of the dependency injection boilerplate. In these
+Haskell approaches, GHC's type inference is used likewise.
+
+After a weekend of battling with ambiguous type errors, I managed to
+use `fused-effects` to write something that looks like dependency
+injection. After doing this, I realized that using an effects system
+was way overkill: my effect signature is just a bunch of Readers, and
+I only `ask` once at the start of the program.
+
+The hardest part of implementing DI was allowing "DI modules" to add
+their own piece of state to the game. For example, `MouseModule` adds
+`MouseState` and `LifeModule` adds `InfiniteGrid Bool`. Modules can
+require some piece of state to exist by using the `DeepHas` constraint
+(the final state is a nested tuple; modules should not depend on the
+position of their desired state in this tuple because that couples
+them to that state and defeats the purpose of this project).
+
+I have an idea of how to implement DI in a cleaner way, without the
+unnecessary `fused-effects`, and I'll try that out soon.
 
 ## Observations / what I learned
 
-### `Main.hs`
-
-Most of the code is in `Main.hs`. I usually try to separate stuff into
-cleanly-separated small files, but recently I realized that trying to
-figure out how to do this sends me down a rabbit hole that I sometimes
-don't come out of. Because of this, I decided to just put everything
-into `Main.hs` and separate it "later", which did not happen because
-it turns out having everything in one file is good enough.
-
-### Grids
-
-I almost got stuck trying to come up with a perfect definition of a
-grid, but fortunately I stopped myself (otherwise I get serious
-analysis paralysis). I wrote `RectGrid` first and then played around
-with QuickCheck briefly before writing the main code. Then I wrote
-`InfiniteGrid` and refactored `Main.hs` to use that---it was
-pleasantly easy.
-
-`InfiniteGrid` and `RectGrid` aren't great grid implementations, but
-they're just good enough for my purposes. My code does not use
-`RectGrid` anymore, but I'm keeping it around for reference.
+Most of what follows was written before the DI update that I describe
+above.
 
 ### Readability of `lens`
 
@@ -141,7 +154,8 @@ respectively, through a prism. Their names come from the similarity to
 
 I'm most proud of my usage of `lens` to write code that reads
 surprisingly well (if you can read Haskell). For example, here's some
-code that looks almost like an imperative program:
+code (from an older commit, before DI) that looks almost like an
+imperative program:
 
 ```haskell
 updateMouseState evt = do
