@@ -57,6 +57,8 @@ I have an idea of how to implement DI in a cleaner way, without the
 unnecessary `fused-effects` (and still without Template Haskell), and
 I'll try that out soon.
 
+EDIT: I did this: http://github.com/timoffex/di-experiments
+
 ## Observations / what I learned
 
 Most of what follows was written before the DI update that I describe
