@@ -26,7 +26,7 @@ If you get it to run, the controls (as of writing) are:
 ### Dependency injection
 
 I implement dependency injection using the `fused-effects` library; no
-Tempalte Haskell required!
+Template Haskell required!
 
 I was thinking about how to do compile-time DI in Haskell when I came
 across a [reasonablypolymorphic post on freer
